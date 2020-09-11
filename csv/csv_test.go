@@ -9,14 +9,14 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-var input = filepath.Join("..", "data", "input.csv")
-var firstRow = []string{"37.454012", "95.071431", "73.199394", "59.865848", "nan"}
-var secondRow = []string{"15.599452", "5.808361", "86.617615", "60.111501", "70.807258"}
-var thirdRow = []string{"2.058449", "96.990985", "nan", "21.233911", "18.182497"}
-var fourthRow = []string{"nan", "30.424224", "52.475643", "43.194502", "29.122914"}
-var lastRow = []string{"61.185289", "13.949386", "29.214465", "nan", "45.606998"}
-
 func TestRowParser(t *testing.T) {
+	input := filepath.Join("..", "data", "input.csv")
+	firstRow := []string{"37.454012", "95.071431", "73.199394", "59.865848", "nan"}
+	secondRow := []string{"15.599452", "5.808361", "86.617615", "60.111501", "70.807258"}
+	thirdRow := []string{"2.058449", "96.990985", "nan", "21.233911", "18.182497"}
+	fourthRow := []string{"nan", "30.424224", "52.475643", "43.194502", "29.122914"}
+	lastRow := []string{"61.185289", "13.949386", "29.214465", "nan", "45.606998"}
+
 	Convey("Given a csv file", t, func() {
 		f, err := os.Open(input)
 		So(err, ShouldBeNil)
@@ -178,7 +178,7 @@ func newRowParser(b *testing.B) *RowParser {
 }
 
 func openInput(b *testing.B) *os.File {
-	f, err := os.Open(input)
+	f, err := os.Open(filepath.Join("..", "data", "input.csv"))
 	if err != nil {
 		b.Fatal(err)
 	}
