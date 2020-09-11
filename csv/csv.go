@@ -14,7 +14,7 @@ import (
 // "overriden".
 type rowGetter func(i int64) ([]string, error)
 
-// csvRowParser is implemented by RowParser and CachedRowParser
+// csvRowParser is implemented by RowParser and CachedRowParser.
 type csvRowParser interface {
 	GetRow(i int64) ([]string, error)
 	GetRows(firstRow int64, numberOfRows int64) ([][]string, error)
