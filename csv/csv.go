@@ -39,6 +39,7 @@ func NewRowParser(data io.ReadSeeker) *RowParser {
 		parser: csv.NewReader(data),
 	}
 	rp.getRowMethod = rp.GetRow
+
 	return rp
 }
 
@@ -50,11 +51,12 @@ func (r *RowParser) GetRow(i int64) ([]string, error) {
 
 	if i != last+1 {
 		_, err := r.fls.SeekLine(i-1, io.SeekStart)
-		r.parser = csv.NewReader(r.data)
-		r.seeks++
 		if err != nil {
 			return nil, err
 		}
+
+		r.parser = csv.NewReader(r.data)
+		r.seeks++
 	}
 
 	return r.parser.Read()
@@ -72,8 +74,10 @@ func (r *RowParser) GetRows(firstRow int64, numberOfRows int64) ([][]string, err
 			if i != 0 {
 				err = nil
 			}
+
 			return rows, err
 		}
+
 		rows[i] = row
 	}
 
@@ -102,6 +106,7 @@ func NewCachedRowParser(data io.ReadSeeker, cacheSize int) (*CachedRowParser, er
 	rp := NewRowParser(data)
 	rp.getRowMethod = crp.GetRow
 	crp.RowParser = rp
+
 	return crp, nil
 }
 
@@ -113,10 +118,12 @@ func (r *CachedRowParser) GetRow(i int64) ([]string, error) {
 	}
 
 	r.reads++
+
 	row, err := r.RowParser.GetRow(i)
 	if err != nil {
 		return nil, err
 	}
+
 	r.cache.Add(i, row)
 
 	return row, err

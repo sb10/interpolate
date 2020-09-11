@@ -182,6 +182,7 @@ func openInput(b *testing.B) *os.File {
 	if err != nil {
 		b.Fatal(err)
 	}
+
 	return f
 }
 
@@ -190,11 +191,11 @@ func BenchmarkCachedRowParserGetRow(b *testing.B) {
 }
 
 func newCachedRowParser(b *testing.B) *CachedRowParser {
-	f := openInput(b)
-	crp, err := NewCachedRowParser(f, 3)
+	crp, err := NewCachedRowParser(openInput(b), 3)
 	if err != nil {
 		b.Fatal(err)
 	}
+
 	return crp
 }
 
