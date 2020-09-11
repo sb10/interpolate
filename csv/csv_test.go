@@ -161,6 +161,10 @@ func TestRowParser(t *testing.T) {
 	})
 }
 
+func BenchmarkRowParserGetRow(b *testing.B) {
+	benchmarkRowParserGetRow(newRowParser(b), b)
+}
+
 func benchmarkRowParserGetRow(rp csvRowParser, b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		var err error
@@ -170,24 +174,34 @@ func benchmarkRowParserGetRow(rp csvRowParser, b *testing.B) {
 	}
 }
 
-func BenchmarkRowParserGetRow(b *testing.B) {
+func newRowParser(b *testing.B) *RowParser {
+	f := openInput(b)
+	return NewRowParser(f)
+}
+
+func openInput(b *testing.B) *os.File {
 	f, err := os.Open(input)
 	if err != nil {
 		b.Fatal(err)
 	}
-	benchmarkRowParserGetRow(NewRowParser(f), b)
+	return f
 }
 
 func BenchmarkCachedRowParserGetRow(b *testing.B) {
-	f, err := os.Open(input)
-	if err != nil {
-		b.Fatal(err)
-	}
+	benchmarkRowParserGetRow(newCachedRowParser(b), b)
+}
+
+func newCachedRowParser(b *testing.B) *CachedRowParser {
+	f := openInput(b)
 	crp, err := NewCachedRowParser(f, 3)
 	if err != nil {
 		b.Fatal(err)
 	}
-	benchmarkRowParserGetRow(crp, b)
+	return crp
+}
+
+func BenchmarkRowParserGetRows(b *testing.B) {
+	benchmarkRowParserGetRows(newRowParser(b), b)
 }
 
 func benchmarkRowParserGetRows(rp csvRowParser, b *testing.B) {
@@ -199,22 +213,6 @@ func benchmarkRowParserGetRows(rp csvRowParser, b *testing.B) {
 	}
 }
 
-func BenchmarkRowParserGetRows(b *testing.B) {
-	f, err := os.Open(input)
-	if err != nil {
-		b.Fatal(err)
-	}
-	benchmarkRowParserGetRows(NewRowParser(f), b)
-}
-
 func BenchmarkCachedRowParserGetRows(b *testing.B) {
-	f, err := os.Open(input)
-	if err != nil {
-		b.Fatal(err)
-	}
-	crp, err := NewCachedRowParser(f, 3)
-	if err != nil {
-		b.Fatal(err)
-	}
-	benchmarkRowParserGetRows(crp, b)
+	benchmarkRowParserGetRows(newCachedRowParser(b), b)
 }
