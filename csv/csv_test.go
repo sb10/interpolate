@@ -60,7 +60,7 @@ func TestRowParser(t *testing.T) {
 				So(vals, ShouldResemble, lastRow)
 			})
 
-			Convey("You can't get a non-existant row", func() {
+			Convey("You can't get a non-existent row", func() {
 				vals, err := rp.GetRow(999)
 				So(err, ShouldNotBeNil)
 				So(err, ShouldEqual, io.EOF)

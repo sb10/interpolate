@@ -11,7 +11,7 @@ import (
 )
 
 // rowGetter describes the GetRow() method of a RowParser, allowing it to be
-// "overriden".
+// "overridden".
 type rowGetter func(i int64) ([]string, error)
 
 // csvRowParser is implemented by RowParser and CachedRowParser.
