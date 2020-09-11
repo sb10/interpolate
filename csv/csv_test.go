@@ -97,7 +97,6 @@ func TestRowParser(t *testing.T) {
 				vals, err := rp.GetRows(2, 3)
 				So(err, ShouldBeNil)
 				So(vals, ShouldResemble, [][]string{secondRow, thirdRow, fourthRow})
-
 			})
 
 			Convey("You can't get rows that don't exist at all", func() {
@@ -175,8 +174,7 @@ func benchmarkRowParserGetRow(rp csvRowParser, b *testing.B) {
 }
 
 func newRowParser(b *testing.B) *RowParser {
-	f := openInput(b)
-	return NewRowParser(f)
+	return NewRowParser(openInput(b))
 }
 
 func openInput(b *testing.B) *os.File {
