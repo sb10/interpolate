@@ -1,8 +1,10 @@
+export GOPATH := $(shell go env GOPATH)
+
 default: install
 
 build: export CGO_ENABLED = 0
 build:
-	go build -tags netgo
+	go build -tags netgo -o build
 
 install: export CGO_ENABLED = 0
 install:
@@ -26,6 +28,6 @@ lint:
 	@golangci-lint run
 
 clean:
-	@rm -f ./interpolate
+	@rm -f ./build
 
 .PHONY: build test race bench lint install clean
