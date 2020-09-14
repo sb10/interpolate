@@ -8,9 +8,11 @@ of non-diagonal neighbours.
 
 Requires go v1.14 or later. Follow https://golang.org/doc/install, then:
 
+```
 git clone https://github.com/sb10/interpolate.git
 cd interpolate
 make install
+```
 
 ## Usage
 
