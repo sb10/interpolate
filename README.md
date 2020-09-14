@@ -1,4 +1,22 @@
-# interpolation
+# interpolate
+
+interpolate takes a csv file representing a 2d matrix of number strings, and
+outputs the same matrix, but with any "nan" values interpolated as the average
+of non-diagonal neighbours.
+
+## Installation
+
+Requires go v1.14 or later. Follow https://golang.org/doc/install, then:
+
+git clone https://github.com/sb10/interpolate.git
+cd interpolate
+make install
+
+## Usage
+
+interpolate your.csv > interpolated.csv
+
+See the example input and output csv files in the data subdirectory.
 
 ## Developers
 To develop this code base, you should use TDD. To aid this, the test suite is

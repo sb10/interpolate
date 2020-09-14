@@ -1,4 +1,4 @@
-module github.com/sb10/interpolation
+module github.com/sb10/interpolate
 
 go 1.14
 
